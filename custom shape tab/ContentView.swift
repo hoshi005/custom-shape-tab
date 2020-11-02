@@ -9,8 +9,35 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        
+        VStack {
+            
+            // tab view.
+            HStack {
+                
+                Spacer()
+                
+                ForEach(TabItem.allCases, id: \.self) { tabItem in
+                    
+                    Button(action: {}, label: {
+                        Text(tabItem.rawValue.uppercased())
+                            .fontWeight(.heavy)
+                            .foregroundColor(.white)
+                    })
+                    .frame(width: 100, height: 100)
+                }
+                
+                Spacer()
+            }
+            .frame(height: 70)
+            .background(
+                Color.accentColor
+                    .ignoresSafeArea()
+            )
+            
+            // content body.
+            Spacer()
+        }
     }
 }
 
