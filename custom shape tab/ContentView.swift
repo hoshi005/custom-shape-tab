@@ -21,7 +21,16 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 enum TabItem: String, CaseIterable {
-    case home = "house"
-    case favorite = "suit.heart"
-    case settings = "gearshape"
+    
+    case home
+    case favorite
+    case settings
+    
+    var imageName: String {
+        switch self {
+        case .home: return "house"
+        case .favorite: return "suit.heart"
+        case .settings: return "gearshape"
+        }
+    }
 }
