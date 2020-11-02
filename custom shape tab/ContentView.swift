@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // 選択中のタブのx軸中央.
+    @State private var tabMidX: CGFloat = 0
+    
     var body: some View {
         
         VStack {
@@ -19,11 +23,29 @@ struct ContentView: View {
                 
                 ForEach(TabItem.allCases, id: \.self) { tabItem in
                     
-                    Button(action: {}, label: {
-                        Text(tabItem.rawValue.uppercased())
-                            .fontWeight(.heavy)
-                            .foregroundColor(.white)
-                    })
+                    GeometryReader { geometry in
+                        
+                        Button(action: {
+                            // タップされたボタンのx軸中央を保持.
+                            tabMidX = geometry.frame(in: .global).midX
+                        }, label: {
+                            Text(tabItem.rawValue.uppercased())
+                                .fontWeight(.heavy)
+                                .foregroundColor(.white)
+                        })
+                        // frameはGeometryReaderに従う.
+                        .frame(
+                            width: geometry.size.width,
+                            height: geometry.size.height
+                        )
+                        .onAppear {
+                            // 初期表示時のみ、一番左のタブのポジションを保持.
+                            if tabItem == TabItem.allCases.first {
+                                tabMidX = geometry.frame(in: .global).midX
+                            }
+                        }
+                    }
+                    // frameはGeometryReaderで定義.
                     .frame(width: 100, height: 100)
                 }
                 
@@ -37,6 +59,9 @@ struct ContentView: View {
             
             // content body.
             Spacer()
+            
+            // debug.
+            Text("\(tabMidX)")
         }
     }
 }
