@@ -19,3 +19,9 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+enum TabItem: String, CaseIterable {
+    case home = "house"
+    case favorite = "suit.heart"
+    case settings = "gearshape"
+}
