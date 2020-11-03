@@ -54,6 +54,7 @@ struct ContentView: View {
             .frame(height: 70)
             .background(
                 Color.accentColor
+                    .clipShape(TabShape())
                     .ignoresSafeArea()
             )
             
@@ -84,5 +85,11 @@ enum TabItem: String, CaseIterable {
         case .favorite: return "suit.heart"
         case .settings: return "gearshape"
         }
+    }
+}
+
+struct TabShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        Capsule().path(in: rect)
     }
 }
