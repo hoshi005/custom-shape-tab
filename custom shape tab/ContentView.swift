@@ -54,7 +54,7 @@ struct ContentView: View {
             .frame(height: 70)
             .background(
                 Color.accentColor
-                    .clipShape(TabShape())
+                    .clipShape(TabShape(tabMidX: tabMidX))
                     .ignoresSafeArea()
             )
             
@@ -89,6 +89,9 @@ enum TabItem: String, CaseIterable {
 }
 
 struct TabShape: Shape {
+    
+    var tabMidX: CGFloat
+    
     func path(in rect: CGRect) -> Path {
         Path { path in
             // 基本となる矩形.
