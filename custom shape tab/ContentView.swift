@@ -26,8 +26,14 @@ struct ContentView: View {
                     GeometryReader { geometry in
                         
                         Button(action: {
-                            // タップされたボタンのx軸中央を保持.
-                            tabMidX = geometry.frame(in: .global).midX
+                            withAnimation(
+                                .interactiveSpring(
+                                    response: 0.5, dampingFraction: 0.5, blendDuration: 0.5
+                                )
+                            ) {
+                                // タップされたボタンのx軸中央を保持.
+                                tabMidX = geometry.frame(in: .global).midX
+                            }
                         }, label: {
                             Text(tabItem.rawValue.uppercased())
                                 .fontWeight(.heavy)
@@ -91,6 +97,11 @@ enum TabItem: String, CaseIterable {
 struct TabShape: Shape {
     
     var tabMidX: CGFloat
+    
+    var animatableData: CGFloat {
+        get { tabMidX }
+        set { tabMidX = newValue }
+    }
     
     func path(in rect: CGRect) -> Path {
         Path { path in
