@@ -14,6 +14,10 @@ struct ContentView: View {
     // 選択中のタブ.
     @State private var selected: TabItem = .home
     
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+    
     var body: some View {
         
         VStack {
@@ -73,12 +77,17 @@ struct ContentView: View {
                     .clipShape(TabShape(tabMidX: tabMidX))
                     .ignoresSafeArea()
             )
+            .zIndex(1)
+
             
             // content body.
-            Spacer()
-            
-            // debug.
-            Text("\(tabMidX)")
+            TabView(selection: $selected) {
+                ForEach(TabItem.allCases, id: \.self) { tabItem in
+                    ContentBodyView(tabItem: tabItem)
+                        .tag(tabItem)
+                }
+            }
+            .zIndex(0)
         }
     }
 }
@@ -140,5 +149,17 @@ struct TabShape: Shape {
             let ctrl2b = CGPoint(x: tabMidX + (curveWidth / 2), y: rect.height)
             path.addCurve(to: to2, control1: ctrl2a, control2: ctrl2b)
         }
+    }
+}
+
+struct ContentBodyView: View {
+    
+    let tabItem: TabItem
+    
+    var body: some View {
+        Text(tabItem.rawValue.uppercased())
+            .font(.largeTitle)
+            .fontWeight(.heavy)
+            .foregroundColor(.accentColor)
     }
 }
