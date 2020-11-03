@@ -90,6 +90,13 @@ enum TabItem: String, CaseIterable {
 
 struct TabShape: Shape {
     func path(in rect: CGRect) -> Path {
-        Capsule().path(in: rect)
+        Path { path in
+            // 基本となる矩形.
+            path.move(to: .zero)
+            path.addLine(to: CGPoint(x: 0, y: rect.height))
+            path.addLine(to: CGPoint(x: rect.width, y: rect.height))
+            path.addLine(to: CGPoint(x: rect.width, y: 0))
+            path.closeSubpath()
+        }
     }
 }
