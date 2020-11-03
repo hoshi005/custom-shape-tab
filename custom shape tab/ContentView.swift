@@ -25,36 +25,44 @@ struct ContentView: View {
                 
                 ForEach(TabItem.allCases, id: \.self) { tabItem in
                     
-                    GeometryReader { geometry in
+                    ZStack {
                         
-                        Button(action: {
-                            withAnimation(
-                                .interactiveSpring(
-                                    response: 0.5, dampingFraction: 0.5, blendDuration: 0.5
-                                )
-                            ) {
-                                // タップされたボタンのx軸中央を保持.
-                                tabMidX = geometry.frame(in: .global).midX
-                            }
-                        }, label: {
-                            Text(tabItem.rawValue.uppercased())
-                                .fontWeight(.heavy)
-                                .foregroundColor(.white)
-                        })
-                        // frameはGeometryReaderに従う.
-                        .frame(
-                            width: geometry.size.width,
-                            height: geometry.size.height
-                        )
-                        .onAppear {
-                            // 初期表示時のみ、一番左のタブのポジションを保持.
-                            if tabItem == TabItem.allCases.first {
-                                tabMidX = geometry.frame(in: .global).midX
+                        Image(systemName: tabItem.imageName)
+                            .foregroundColor(.accentColor)
+                            .offset(y: tabItem == selected ? 26 : -100)
+                        
+                        GeometryReader { geometry in
+                            
+                            Button(action: {
+                                withAnimation(
+                                    .interactiveSpring(
+                                        response: 0.5, dampingFraction: 0.5, blendDuration: 0.5
+                                    )
+                                ) {
+                                    // タップされたボタンのx軸中央を保持.
+                                    tabMidX = geometry.frame(in: .global).midX
+                                    selected = tabItem
+                                }
+                            }, label: {
+                                Text(tabItem.rawValue.uppercased())
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(.white)
+                            })
+                            // frameはGeometryReaderに従う.
+                            .frame(
+                                width: geometry.size.width,
+                                height: geometry.size.height
+                            )
+                            .onAppear {
+                                // 初期表示時のみ、一番左のタブのポジションを保持.
+                                if tabItem == TabItem.allCases.first {
+                                    tabMidX = geometry.frame(in: .global).midX
+                                }
                             }
                         }
+                        // frameはGeometryReaderで定義.
+                        .frame(width: 100, height: 100)
                     }
-                    // frameはGeometryReaderで定義.
-                    .frame(width: 100, height: 100)
                 }
                 
                 Spacer()
