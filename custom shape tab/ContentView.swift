@@ -100,6 +100,24 @@ struct TabShape: Shape {
             path.addLine(to: CGPoint(x: rect.width, y: rect.height))
             path.addLine(to: CGPoint(x: rect.width, y: 0))
             path.closeSubpath()
+            
+            let curveWidth = rect.width / 10
+            let curveHeight = rect.height / 5
+            
+            // 始点.
+            path.move(to: CGPoint(x: tabMidX - curveWidth, y: rect.height))
+            
+            // 左半分.
+            let to1 = CGPoint(x: tabMidX, y: rect.height - curveHeight)
+            let ctrl1a = CGPoint(x: tabMidX - (curveWidth / 2), y: rect.height)
+            let ctrl1b = CGPoint(x: tabMidX - (curveWidth / 2), y: rect.height - curveHeight)
+            path.addCurve(to: to1, control1: ctrl1a, control2: ctrl1b)
+            
+            // 右半分.
+            let to2 = CGPoint(x: tabMidX + curveWidth, y: rect.height)
+            let ctrl2a = CGPoint(x: tabMidX + (curveWidth / 2), y: rect.height - curveHeight)
+            let ctrl2b = CGPoint(x: tabMidX + (curveWidth / 2), y: rect.height)
+            path.addCurve(to: to2, control1: ctrl2a, control2: ctrl2b)
         }
     }
 }
