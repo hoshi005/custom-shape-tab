@@ -76,6 +76,10 @@ struct ContentView: View {
                 Color.accentColor
                     .clipShape(TabShape(tabMidX: tabMidX))
                     .ignoresSafeArea()
+                    .shadow(
+                        color: Color.black.opacity(0.1),
+                        radius: 1, x: 0, y: 5
+                    )
             )
             .zIndex(1)
 
