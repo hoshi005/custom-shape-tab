@@ -11,6 +11,8 @@ struct ContentView: View {
     
     // 選択中のタブのx軸中央.
     @State private var tabMidX: CGFloat = 0
+    // 選択中のタブ.
+    @State private var selected: TabItem = .home
     
     var body: some View {
         
